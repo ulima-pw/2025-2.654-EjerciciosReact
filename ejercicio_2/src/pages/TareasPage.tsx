@@ -1,5 +1,9 @@
+import TodoHeader from "../components/TodoHeader"
+
 const TareasPage = () => {
-    return <div>Tareas Page</div>
+    return <div className="container">
+        <TodoHeader />
+    </div>
 }
 
 export default TareasPage
