@@ -18,9 +18,20 @@ const todos : Todo[] = [
 const TareasPage = () => {
     const [valorTexto, setValorTexto ] = useState<string>("")
     const [listaTodos, setListaTodos] = useState<Todo[]>([])
+    const [onlyPending, setOnlyPending] = useState<boolean>(false)
 
     return <div className="container">
-        <TodoHeader />
+        <TodoHeader total={ listaTodos.length }
+            done={ listaTodos.filter( ( todo : Todo) => { 
+                return todo.done == true 
+            }).length }
+            pending={ listaTodos.filter( ( todo : Todo) => { 
+                return todo.done == false 
+            }).length }
+            onlyPending={ onlyPending }
+            onToggleFilter={ () => {
+                setOnlyPending(!onlyPending)
+            } }  />
         <hr />
         <TodoForm value={ valorTexto }
             onChange={ (v : string) => {
@@ -36,7 +47,12 @@ const TareasPage = () => {
                 setListaTodos(listaClonada)
                 setValorTexto("")
             } } />
-        <TodoList items={ listaTodos }
+        <TodoList 
+            items={ 
+                onlyPending ? 
+                    listaTodos.filter( (todo : Todo) => { return todo.done != true } ) :
+                    listaTodos
+            }
             onToggle={ (id : string) => {
                 const listaClonada = [...listaTodos]
                 for (let todo of listaClonada ) {
