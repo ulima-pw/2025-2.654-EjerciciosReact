@@ -1,3 +1,4 @@
+import { useState } from "react"
 import TodoForm from "../components/TodoForm"
 import TodoHeader from "../components/TodoHeader"
 import TodoList from "../components/TodoList"
@@ -15,11 +16,26 @@ const todos : Todo[] = [
 ]
 
 const TareasPage = () => {
+    const [valorTexto, setValorTexto ] = useState<string>("")
+    const [listaTodos, setListaTodos] = useState<Todo[]>([])
+
     return <div className="container">
         <TodoHeader />
         <hr />
-        <TodoForm />
-        <TodoList items={ todos } />
+        <TodoForm value={ valorTexto }
+            onChange={ (v : string) => {
+                setValorTexto(v)
+            } }
+            onAdd={ () => {
+                const listaClonada = [...listaTodos]
+                listaClonada.push({
+                    id : new Date().getTime().toString(),
+                    text : valorTexto,
+                    done : false
+                })
+                setListaTodos(listaClonada)
+            } } />
+        <TodoList items={ listaTodos } />
     </div>
 }
 
