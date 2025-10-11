@@ -34,8 +34,24 @@ const TareasPage = () => {
                     done : false
                 })
                 setListaTodos(listaClonada)
+                setValorTexto("")
             } } />
-        <TodoList items={ listaTodos } />
+        <TodoList items={ listaTodos }
+            onToggle={ (id : string) => {
+                const listaClonada = [...listaTodos]
+                for (let todo of listaClonada ) {
+                    if (todo.id == id) {
+                        todo.done = !todo.done
+                    }
+                }
+                setListaTodos(listaClonada)
+            } }
+            onDelete={ (id:string) => {
+                const listaFiltrada = listaTodos.filter( (todo : Todo) => {
+                    return todo.id != id
+                } )
+                setListaTodos(listaFiltrada)
+            } } />
     </div>
 }
 

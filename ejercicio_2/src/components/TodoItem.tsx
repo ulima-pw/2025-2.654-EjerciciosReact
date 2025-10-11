@@ -3,7 +3,12 @@ import type { Todo } from "../pages/TareasPage";
 const TodoItem = (props : TodoItemProps) => {
     return <tr>
         <td>
-            <input className="form-check-input" type="checkbox" />
+            <input className="form-check-input" 
+                type="checkbox"
+                checked={ props.item.done }
+                onChange={ () => {
+                    props.onToggle()
+                } } />
         </td>
         <td>
             {
@@ -11,7 +16,11 @@ const TodoItem = (props : TodoItemProps) => {
             }
         </td>
         <td>
-            <button className="btn btn-danger float-end" type="button">
+            <button className="btn btn-danger float-end" 
+                type="button"
+                onClick={ () => {
+                    props.onDelete()
+                } }>
                 Eliminar
             </button>
         </td>
@@ -20,8 +29,8 @@ const TodoItem = (props : TodoItemProps) => {
 
 interface TodoItemProps {
     item: Todo;
-    //onToggle: () => void;
-    //onDelete: () => void;
+    onToggle: () => void;
+    onDelete: () => void;
   }
 
 export default TodoItem

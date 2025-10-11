@@ -9,7 +9,14 @@ const TodoList = (props : TodoListProps) => {
         <tbody>
             {
                 props.items.map((item : Todo) => {
-                    return  <TodoItem item={ item }/>
+                    return  <TodoItem item={ item }
+                        onToggle={ () => {
+                            props.onToggle(item.id)
+                        } }
+                        onDelete={ () => {
+                            props.onDelete(item.id)
+                        } }
+                    />
                 })
             }
         </tbody>
@@ -18,8 +25,8 @@ const TodoList = (props : TodoListProps) => {
 
 interface TodoListProps {
     items: Todo[]
-    //onToggle:(id:string)=>void
-    //onDelete:(id:string)=>void
+    onToggle:(id:string)=>void
+    onDelete:(id:string)=>void
 }
 
 export default TodoList
