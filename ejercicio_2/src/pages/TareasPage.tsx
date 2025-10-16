@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import TodoForm from "../components/TodoForm"
 import TodoHeader from "../components/TodoHeader"
 import TodoList from "../components/TodoList"
@@ -9,16 +9,20 @@ export interface Todo {
     done: boolean
 }
 
-const todos : Todo[] = [
-    {id : "1", text : "Hacer compras", done : false },
-    {id : "2", text : "Estudiar", done : true },
-    {id : "3", text : "Reunirme para el trabajo", done : false }
-]
-
 const TareasPage = () => {
     const [valorTexto, setValorTexto ] = useState<string>("")
     const [listaTodos, setListaTodos] = useState<Todo[]>([])
     const [onlyPending, setOnlyPending] = useState<boolean>(false)
+
+    const obtenerTodos = async () => {
+        const resp = await fetch("https://script.google.com/macros/s/AKfycbwgeI_73PDATECHnJOiRDm6UtL30vnl_iaRjPUXMCgEFeiJpgRImv4sK5wOc4_o3N-ywg/exec?entity=654")
+        const data = await resp.json()
+        setListaTodos(data)
+    }
+
+    useEffect( () => {
+        obtenerTodos()
+    }, [] )
 
     return <div className="container">
         <TodoHeader total={ listaTodos.length }
